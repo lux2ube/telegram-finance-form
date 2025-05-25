@@ -47,6 +47,11 @@ broker.html
       background-color: #2a9df4;
       color: white;
       margin-top: 15px;
+      cursor: pointer;
+    }
+
+    button:active {
+      opacity: 0.9;
     }
   </style>
 </head>
@@ -63,21 +68,30 @@ broker.html
     <label for="account">Account Number</label>
     <input type="text" id="account" placeholder="e.g. 123456789">
 
-    <button onclick="submitAccount()">Send</button>
+    <button id="sendButton">Send</button>
   </div>
 
   <script>
-    Telegram.WebApp.ready();
+    const tg = window.Telegram.WebApp;
+    tg.ready();
 
-    function submitAccount() {
+    document.getElementById("sendButton").addEventListener("click", function () {
+      const broker = document.getElementById("broker").value;
+      const account = document.getElementById("account").value;
+
+      if (!broker || !account) {
+        alert("Please fill in all fields.");
+        return;
+      }
+
       const data = {
-        broker: document.getElementById("broker").value,
-        account: document.getElementById("account").value
+        broker: broker,
+        account: account
       };
 
-      Telegram.WebApp.sendData(JSON.stringify(data));
-      Telegram.WebApp.close();
-    }
+      tg.sendData(JSON.stringify(data));
+      tg.close();
+    });
   </script>
 </body>
 </html>
