@@ -1,0 +1,83 @@
+broker.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Add Trading Account</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <style>
+    body {
+      font-family: sans-serif;
+      background-color: var(--tg-theme-bg-color, #f9f9f9);
+      color: var(--tg-theme-text-color, #000);
+      padding: 20px;
+    }
+
+    .container {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      padding: 20px;
+      max-width: 400px;
+      margin: auto;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    label {
+      font-weight: bold;
+      margin-top: 10px;
+      display: block;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      font-size: 18px;
+      border: none;
+      border-radius: 8px;
+      background-color: #2a9df4;
+      color: white;
+      margin-top: 15px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <label for="broker">Broker</label>
+    <select id="broker">
+      <option value="FBS">FBS</option>
+      <option value="TopFX">TopFX</option>
+      <option value="ICMarkets">IC Markets</option>
+      <option value="Exness">Exness</option>
+    </select>
+
+    <label for="account">Account Number</label>
+    <input type="text" id="account" placeholder="e.g. 123456789">
+
+    <button onclick="submitAccount()">Send</button>
+  </div>
+
+  <script>
+    Telegram.WebApp.ready();
+
+    function submitAccount() {
+      const data = {
+        broker: document.getElementById("broker").value,
+        account: document.getElementById("account").value
+      };
+
+      Telegram.WebApp.sendData(JSON.stringify(data));
+      Telegram.WebApp.close();
+    }
+  </script>
+</body>
+</html>
